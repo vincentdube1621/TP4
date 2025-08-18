@@ -1,0 +1,24 @@
+﻿# Dossiers et fichiers temporaires de Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+[Bb]uilds/
+
+# Fichiers de configuration spécifiques à l'environnement
+*.local.json
+
