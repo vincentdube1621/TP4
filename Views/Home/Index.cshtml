@@ -1,8 +1,40 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Accueil";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenue dans la Bibliothèque</h1>
+    <p class="lead">Gérez vos livres, usagers et prêts facilement.</p>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Livres</h5>
+                    <p class="card-text">Consultez et gérez la collection de livres.</p>
+                    <a class="btn btn-primary" asp-controller="Livres" asp-action="Index">Voir les livres</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Usagers</h5>
+                    <p class="card-text">Gérez les membres de la bibliothèque.</p>
+                    <a class="btn btn-success" asp-controller="Usagers" asp-action="Index">Voir les usagers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Prêts</h5>
+                    <p class="card-text">Suivez les prêts et retours de livres.</p>
+                    <a class="btn btn-warning" asp-controller="Prets" asp-action="Index">Voir les prêts</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

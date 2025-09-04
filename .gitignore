@@ -1,21 +1,20 @@
-# === Visual Studio ===
-.vs/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# === Build results ===
+﻿# Build results
 bin/
 obj/
-[Bb]uild/
-[Bb]uilds/
-x64/
-x86/
 
-# === Logs & temporaires ===
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Logs
 *.log
-*.temp
 
-# === Fichiers de config locaux ===
-appsettings.Development.json
+# Config temporaire
+*.cache
+*.db
+
+# Autres fichiers générés
+*.exe
+*.dll
+*.pdb
