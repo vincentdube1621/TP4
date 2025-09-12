@@ -1,39 +1,95 @@
-﻿@{
+﻿@model BibliothequeLIPAJOLI.Models.DashboardStats
+@{
     ViewData["Title"] = "Accueil";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bienvenue dans la Bibliothèque</h1>
+    <h1 class="display-4">📚 Bienvenue dans la Bibliothèque</h1>
     <p class="lead">Gérez vos livres, usagers et prêts facilement.</p>
+</div>
 
-    <div class="row mt-5">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Livres</h5>
-                    <p class="card-text">Consultez et gérez la collection de livres.</p>
-                    <a class="btn btn-primary" asp-controller="Livres" asp-action="Index">Voir les livres</a>
-                </div>
+<!-- Statistiques Dashboard -->
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>@Model.TotalLivres</h3>
+                <p class="mb-0">Livres</p>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Usagers</h5>
-                    <p class="card-text">Gérez les membres de la bibliothèque.</p>
-                    <a class="btn btn-success" asp-controller="Usagers" asp-action="Index">Voir les usagers</a>
-                </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3>@Model.TotalUsagers</h3>
+                <p class="mb-0">Usagers</p>
             </div>
         </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3>@Model.PretsActifs</h3>
+                <p class="mb-0">Prêts actifs</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h3>@Model.PretsEnRetard</h3>
+                <p class="mb-0">En retard</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-secondary text-white">
+            <div class="card-body text-center">
+                <h3>@Model.LivresDisponibles</h3>
+                <p class="mb-0">Disponibles</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Prêts</h5>
-                    <p class="card-text">Suivez les prêts et retours de livres.</p>
-                    <a class="btn btn-warning" asp-controller="Prets" asp-action="Index">Voir les prêts</a>
-                </div>
+<!-- Alertes -->
+@if (Model.PretsEnRetard > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>⚠️ Attention!</strong> Il y a @Model.PretsEnRetard prêt(s) en retard.
+        <a asp-controller="Prets" asp-action="Index" class="alert-link">Voir les prêts</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Navigation rapide -->
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">📖 Livres</h5>
+                <p class="card-text">Consultez et gérez la collection de livres.</p>
+                <a class="btn btn-primary" asp-controller="Livres" asp-action="Index">Voir les livres</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">👥 Usagers</h5>
+                <p class="card-text">Gérez les membres de la bibliothèque.</p>
+                <a class="btn btn-success" asp-controller="Usagers" asp-action="Index">Voir les usagers</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">📋 Prêts</h5>
+                <p class="card-text">Suivez les prêts et retours de livres.</p>
+                <a class="btn btn-warning" asp-controller="Prets" asp-action="Index">Voir les prêts</a>
             </div>
         </div>
     </div>
