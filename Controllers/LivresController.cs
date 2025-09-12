@@ -20,9 +20,14 @@ namespace BibliothequeLIPAJOLI.Controllers
         {
             var livres = await _repository.GetAllAsync();
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrWhiteSpace(searchString))
             {
-                livres = livres.Where(l => l.Titre.ToLower().Contains(searchString.ToLower()));
+                var q = searchString.Trim().ToLower();
+                livres = livres.Where(l =>
+                    (!string.IsNullOrEmpty(l.Titre) && l.Titre.ToLower().Contains(q)) ||
+                    (!string.IsNullOrEmpty(l.Auteur) && l.Auteur.ToLower().Contains(q)) ||
+                    (!string.IsNullOrEmpty(l.Isbn) && l.Isbn.ToLower().Contains(q))
+                );
             }
 
             return View(livres);

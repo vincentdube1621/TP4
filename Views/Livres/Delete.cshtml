@@ -11,29 +11,41 @@
     <h4>Livre</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Titre)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Titre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Auteur)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Auteur)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AnneePublication)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AnneePublication)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstDisponible)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Isbn)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstDisponible)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Isbn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuantiteTotale)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuantiteTotale)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuantiteDisponible)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuantiteDisponible)
         </dd>
     </dl>
     

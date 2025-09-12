@@ -27,10 +27,20 @@
                 <input asp-for="AnneePublication" class="form-control" />
                 <span asp-validation-for="AnneePublication" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EstDisponible" /> @Html.DisplayNameFor(model => model.EstDisponible)
-                </label>
+            <div class="form-group">
+                <label asp-for="Isbn" class="control-label"></label>
+                <input asp-for="Isbn" class="form-control" />
+                <span asp-validation-for="Isbn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantiteTotale" class="control-label"></label>
+                <input asp-for="QuantiteTotale" class="form-control" />
+                <span asp-validation-for="QuantiteTotale" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantiteDisponible" class="control-label"></label>
+                <input asp-for="QuantiteDisponible" class="form-control" />
+                <span asp-validation-for="QuantiteDisponible" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

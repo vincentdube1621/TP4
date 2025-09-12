@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BibliothèqueLIPAJOLI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreateSqlite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,12 +15,14 @@ namespace BibliothèqueLIPAJOLI.Migrations
                 name: "Livres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Titre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Auteur = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AnneePublication = table.Column<int>(type: "int", nullable: false),
-                    EstDisponible = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Titre = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    Auteur = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    AnneePublication = table.Column<int>(type: "INTEGER", nullable: false),
+                    Isbn = table.Column<string>(type: "TEXT", nullable: false),
+                    QuantiteTotale = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuantiteDisponible = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,12 +33,12 @@ namespace BibliothèqueLIPAJOLI.Migrations
                 name: "Usagers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Prenom = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Telephone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Prenom = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Nom = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Courriel = table.Column<string>(type: "TEXT", nullable: false),
+                    Telephone = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,13 +49,13 @@ namespace BibliothèqueLIPAJOLI.Migrations
                 name: "Prets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DatePret = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateRetourPrevue = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateRetourReelle = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LivreId = table.Column<int>(type: "int", nullable: false),
-                    UsagerId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DatePret = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateRetourPrevue = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateRetourReelle = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    LivreId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsagerId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

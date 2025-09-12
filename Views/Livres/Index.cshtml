@@ -12,7 +12,7 @@
 
 <form asp-controller="Livres" asp-action="Index" method="get">
     <p>
-        Titre : <input type="text" name="searchString" />
+        Recherche (titre/auteur/ISBN) : <input type="text" name="searchString" />
         <input type="submit" value="Rechercher" />
     </p>
 </form>
@@ -30,7 +30,13 @@
                 @Html.DisplayNameFor(model => model.AnneePublication)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EstDisponible)
+                @Html.DisplayNameFor(model => model.Isbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantiteTotale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantiteDisponible)
             </th>
             <th></th>
         </tr>
@@ -48,7 +54,13 @@
                 @Html.DisplayFor(modelItem => item.AnneePublication)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EstDisponible)
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantiteTotale)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantiteDisponible)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

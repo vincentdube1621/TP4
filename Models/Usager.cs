@@ -16,10 +16,13 @@ namespace BibliothequeLIPAJOLI.Models
         [MaxLength(50)]
         public string Nom { get; set; }
 
-        [EmailAddress(ErrorMessage = "Adresse email invalide")]
-        public string Email { get; set; }
+        [Required]
+        [EmailAddress(ErrorMessage = "Adresse courriel invalide")]
+        [Display(Name = "Courriel")]
+        public string Courriel { get; set; }
 
         [Phone(ErrorMessage = "Numéro de téléphone invalide")]
+        [Display(Name = "Téléphone")]
         public string? Telephone { get; set; }
 
         // Navigation
