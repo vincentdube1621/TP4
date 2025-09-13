@@ -1,0 +1,64 @@
+@model Bibliotheques.ApplicationCore.Entities.Livre
+@{
+    ViewData["Title"] = "Modifier le Livre";
+}
+
+<h2><i class="fas fa-edit"></i> Modifier le Livre</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="mb-3">
+                <label asp-for="Titre" class="form-label"></label>
+                <input asp-for="Titre" class="form-control" />
+                <span asp-validation-for="Titre" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="Auteur" class="form-label"></label>
+                <input asp-for="Auteur" class="form-control" />
+                <span asp-validation-for="Auteur" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="AnneePublication" class="form-label"></label>
+                <input asp-for="AnneePublication" class="form-control" />
+                <span asp-validation-for="AnneePublication" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="Isbn" class="form-label"></label>
+                <input asp-for="Isbn" class="form-control" />
+                <span asp-validation-for="Isbn" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="QuantiteTotale" class="form-label"></label>
+                <input asp-for="QuantiteTotale" class="form-control" />
+                <span asp-validation-for="QuantiteTotale" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="QuantiteDisponible" class="form-label"></label>
+                <input asp-for="QuantiteDisponible" class="form-control" />
+                <span asp-validation-for="QuantiteDisponible" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Sauvegarder
+                </button>
+                <a class="btn btn-secondary" asp-action="Index">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

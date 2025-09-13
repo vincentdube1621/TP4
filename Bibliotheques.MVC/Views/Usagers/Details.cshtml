@@ -1,0 +1,84 @@
+@model Bibliotheques.ApplicationCore.Entities.Usager
+@{
+    ViewData["Title"] = "Détails de l'Usager";
+}
+
+<h2><i class="fas fa-user"></i> Détails de l'Usager</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>@Model.NomComplet</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Prénom:</dt>
+                    <dd class="col-sm-9">@Model.Prenom</dd>
+                    
+                    <dt class="col-sm-3">Nom:</dt>
+                    <dd class="col-sm-9">@Model.Nom</dd>
+                    
+                    <dt class="col-sm-3">Courriel:</dt>
+                    <dd class="col-sm-9">@Model.Courriel</dd>
+                    
+                    <dt class="col-sm-3">Téléphone:</dt>
+                    <dd class="col-sm-9">@(Model.Telephone ?? "-")</dd>
+                    
+                    <dt class="col-sm-3">Défaillances:</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.NombreDefaillances > 0)
+                        {
+                            <span class="badge bg-warning">@Model.NombreDefaillances</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">0</span>
+                        }
+                    </dd>
+                    
+                    <dt class="col-sm-3">Statut:</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.EstBloque)
+                        {
+                            <span class="badge bg-danger">
+                                <i class="fas fa-ban"></i> Bloqué (3 défaillances)
+                            </span>
+                        }
+                        else if (Model.PeutEmprunter)
+                        {
+                            <span class="badge bg-success">
+                                <i class="fas fa-check"></i> Peut emprunter
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning">
+                                <i class="fas fa-exclamation-triangle"></i> Limite d'emprunts atteinte
+                            </span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Actions</h5>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-warning w-100 mb-2" asp-action="Edit" asp-route-id="@Model.Id">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <a class="btn btn-danger w-100 mb-2" asp-action="Delete" asp-route-id="@Model.Id">
+                    <i class="fas fa-trash"></i> Supprimer
+                </a>
+                <a class="btn btn-secondary w-100" asp-action="Index">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

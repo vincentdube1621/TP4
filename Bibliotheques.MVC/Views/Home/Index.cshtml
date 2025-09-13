@@ -1,0 +1,142 @@
+@model Bibliotheques.MVC.Controllers.DashboardStats
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center">
+    <h1 class="display-4"><i class="fas fa-book"></i> Bienvenue dans la Bibliothèque LIPAJOLI</h1>
+    <p class="lead">Gérez vos livres, usagers et emprunts facilement.</p>
+</div>
+
+<!-- Statistiques Dashboard -->
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-book fa-2x mb-2"></i>
+                <h3>@Model.TotalLivres</h3>
+                <p class="mb-0">Livres</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-2x mb-2"></i>
+                <h3>@Model.TotalUsagers</h3>
+                <p class="mb-0">Usagers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-hand-holding fa-2x mb-2"></i>
+                <h3>@Model.PretsActifs</h3>
+                <p class="mb-0">Emprunts actifs</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h3>@Model.PretsEnRetard</h3>
+                <p class="mb-0">En retard</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-secondary text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <h3>@Model.LivresDisponibles</h3>
+                <p class="mb-0">Disponibles</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-dark text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-percentage fa-2x mb-2"></i>
+                <h3>@(Model.TotalLivres > 0 ? Math.Round((double)Model.LivresDisponibles / Model.TotalLivres * 100, 1) : 0)%</h3>
+                <p class="mb-0">Disponibilité</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alertes -->
+@if (Model.PretsEnRetard > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Attention!</strong> Il y a @Model.PretsEnRetard emprunt(s) en retard.
+        <a asp-controller="Emprunts" asp-action="EnRetard" class="alert-link">Voir les emprunts en retard</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (Model.LivresDisponibles == 0)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <strong>Aucun livre disponible!</strong> Tous les livres sont actuellement empruntés.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Navigation rapide -->
+<div class="row mt-5">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Livres</h5>
+                <p class="card-text">Gérez la collection de livres</p>
+                <a class="btn btn-primary" asp-controller="Livres" asp-action="Index">
+                    <i class="fas fa-list"></i> Voir les livres
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Usagers</h5>
+                <p class="card-text">Gérez les membres</p>
+                <a class="btn btn-success" asp-controller="Usagers" asp-action="Index">
+                    <i class="fas fa-list"></i> Voir les usagers
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-hand-holding fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">Emprunts</h5>
+                <p class="card-text">Suivez les emprunts</p>
+                <a class="btn btn-warning" asp-controller="Emprunts" asp-action="Index">
+                    <i class="fas fa-list"></i> Voir les emprunts
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-plus fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Nouvel Emprunt</h5>
+                <p class="card-text">Créer un emprunt</p>
+                <a class="btn btn-info" asp-controller="Emprunts" asp-action="Create">
+                    <i class="fas fa-plus"></i> Emprunter
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

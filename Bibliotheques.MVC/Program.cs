@@ -5,9 +5,9 @@ using Bibliotheques.ApplicationCore.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuration de la base de données
+// Configuration de la base de données (même que l'API)
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? "Data Source=lipajoli.db";
+    ?? "Data Source=..\\lipajoli.db";
 
 builder.Services.AddDbContext<BibliothequeContext>(options =>
     options.UseSqlite(connectionString));

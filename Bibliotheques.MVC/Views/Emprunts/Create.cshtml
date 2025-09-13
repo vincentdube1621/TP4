@@ -1,0 +1,60 @@
+@model Bibliotheques.MVC.Controllers.CreerEmpruntRequest
+@{
+    ViewData["Title"] = "Nouvel Emprunt";
+}
+
+<h2><i class="fas fa-plus"></i> Nouvel Emprunt</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="UsagerId" class="form-label">Usager</label>
+                <select asp-for="UsagerId" class="form-select" asp-items="ViewBag.UsagerId">
+                    <option value="">-- Sélectionner un usager --</option>
+                </select>
+                <span asp-validation-for="UsagerId" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="LivreId" class="form-label">Livre</label>
+                <select asp-for="LivreId" class="form-select" asp-items="ViewBag.LivreId">
+                    <option value="">-- Sélectionner un livre --</option>
+                </select>
+                <span asp-validation-for="LivreId" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Créer l'emprunt
+                </button>
+                <a class="btn btn-secondary" asp-action="Index">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </form>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Règles d'emprunt</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success"></i> Maximum 3 emprunts simultanés par usager</li>
+                    <li><i class="fas fa-check text-success"></i> Un seul exemplaire du même livre par usager</li>
+                    <li><i class="fas fa-check text-success"></i> Durée d'emprunt : 10 jours</li>
+                    <li><i class="fas fa-exclamation-triangle text-warning"></i> Défaillance si retour après 10 jours</li>
+                    <li><i class="fas fa-ban text-danger"></i> Blocage après 3 défaillances</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

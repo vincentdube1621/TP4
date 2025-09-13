@@ -1,28 +1,25 @@
-﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BibliothequeLIPAJOLI.Models
+namespace Bibliotheques.ApplicationCore.Entities
 {
     /// <summary>
-    /// Représente un prêt de livre dans la bibliothèque
+    /// Représente un emprunt de livre dans la bibliothèque
     /// </summary>
-    public class Pret
+    public class Emprunt
     {
         /// <summary>
-        /// Identifiant unique du prêt
+        /// Identifiant unique de l'emprunt
         /// </summary>
-        [Key]
         public int Id { get; set; }
 
         /// <summary>
         /// Date à laquelle le livre a été emprunté
         /// </summary>
-        [Required(ErrorMessage = "La date de prêt est obligatoire")]
+        [Required(ErrorMessage = "La date d'emprunt est obligatoire")]
         [DataType(DataType.Date)]
-        [Display(Name = "Date de prêt")]
-        [NotFutureDate]
-        public DateTime DatePret { get; set; } = DateTime.Now;
+        [Display(Name = "Date d'emprunt")]
+        public DateTime DateEmprunt { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Date prévue pour le retour du livre
@@ -30,7 +27,6 @@ namespace BibliothequeLIPAJOLI.Models
         [Required(ErrorMessage = "La date de retour prévue est obligatoire")]
         [DataType(DataType.Date)]
         [Display(Name = "Date de retour prévue")]
-        [DateRetourAfterDatePret(nameof(DatePret))]
         public DateTime DateRetourPrevue { get; set; }
 
         /// <summary>
@@ -39,6 +35,12 @@ namespace BibliothequeLIPAJOLI.Models
         [DataType(DataType.Date)]
         [Display(Name = "Date de retour réelle")]
         public DateTime? DateRetourReelle { get; set; }
+
+        /// <summary>
+        /// Indique si l'emprunt a causé une défaillance
+        /// </summary>
+        [Display(Name = "Défaillance")]
+        public bool EstDefaillance { get; set; } = false;
 
         /// <summary>
         /// Identifiant du livre emprunté
@@ -65,12 +67,12 @@ namespace BibliothequeLIPAJOLI.Models
         public Usager Usager { get; set; } = null!;
 
         /// <summary>
-        /// Vérifie si le prêt est actif (pas encore retourné)
+        /// Vérifie si l'emprunt est actif (pas encore retourné)
         /// </summary>
         public bool EstActif => DateRetourReelle == null;
 
         /// <summary>
-        /// Vérifie si le prêt est en retard
+        /// Vérifie si l'emprunt est en retard
         /// </summary>
         public bool EstEnRetard => EstActif && DateRetourPrevue < DateTime.Now;
 
@@ -80,19 +82,19 @@ namespace BibliothequeLIPAJOLI.Models
         public int JoursDeRetard => EstEnRetard ? (DateTime.Now - DateRetourPrevue).Days : 0;
 
         /// <summary>
-        /// Durée du prêt en jours
+        /// Durée de l'emprunt en jours
         /// </summary>
-        public int DureePret => (DateRetourReelle ?? DateTime.Now - DatePret).Days;
+        public int DureeEmprunt => (DateRetourReelle ?? DateTime.Now - DateEmprunt).Days;
 
         /// <summary>
-        /// Statut du prêt sous forme de texte
+        /// Statut de l'emprunt sous forme de texte
         /// </summary>
         public string Statut
         {
             get
             {
                 if (DateRetourReelle.HasValue)
-                    return "Retourné";
+                    return EstDefaillance ? "Retourné (Défaillance)" : "Retourné";
                 if (EstEnRetard)
                     return $"En retard ({JoursDeRetard} jours)";
                 return "Actif";

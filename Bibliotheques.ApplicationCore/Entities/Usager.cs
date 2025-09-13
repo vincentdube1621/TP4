@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliothequeLIPAJOLI.Models
+namespace Bibliotheques.ApplicationCore.Entities
 {
     /// <summary>
     /// Représente un usager de la bibliothèque
@@ -11,7 +10,6 @@ namespace BibliothequeLIPAJOLI.Models
         /// <summary>
         /// Identifiant unique de l'usager
         /// </summary>
-        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -46,9 +44,16 @@ namespace BibliothequeLIPAJOLI.Models
         public string? Telephone { get; set; }
 
         /// <summary>
-        /// Collection des prêts associés à cet usager
+        /// Nombre de défaillances de l'usager
         /// </summary>
-        public ICollection<Pret>? Prets { get; set; }
+        [Range(0, 3, ErrorMessage = "Le nombre de défaillances doit être entre 0 et 3")]
+        [Display(Name = "Défaillances")]
+        public int NombreDefaillances { get; set; } = 0;
+
+        /// <summary>
+        /// Collection des emprunts associés à cet usager
+        /// </summary>
+        public ICollection<Emprunt>? Emprunts { get; set; }
 
         /// <summary>
         /// Nom complet de l'usager
@@ -56,13 +61,18 @@ namespace BibliothequeLIPAJOLI.Models
         public string NomComplet => $"{Prenom} {Nom}";
 
         /// <summary>
-        /// Nombre de prêts actifs de cet usager
+        /// Nombre d'emprunts actifs de cet usager
         /// </summary>
-        public int NombrePretsActifs => Prets?.Count(p => p.DateRetourReelle == null) ?? 0;
+        public int NombreEmpruntsActifs => Emprunts?.Count(e => e.DateRetourReelle == null) ?? 0;
 
         /// <summary>
-        /// Vérifie si l'usager peut emprunter (moins de 3 prêts actifs)
+        /// Vérifie si l'usager peut emprunter (moins de 3 emprunts actifs et moins de 3 défaillances)
         /// </summary>
-        public bool PeutEmprunter => NombrePretsActifs < 3;
+        public bool PeutEmprunter => NombreEmpruntsActifs < 3 && NombreDefaillances < 3;
+
+        /// <summary>
+        /// Vérifie si l'usager est bloqué (3 défaillances)
+        /// </summary>
+        public bool EstBloque => NombreDefaillances >= 3;
     }
 }

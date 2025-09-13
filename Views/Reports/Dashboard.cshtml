@@ -1,0 +1,187 @@
+@model BibliothequeLIPAJOLI.Models.DashboardStats
+@{
+    ViewData["Title"] = "Tableau de bord";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-chart-line"></i> Tableau de bord</h2>
+    <div>
+        <a asp-action="ExportCsv" asp-route-type="livres" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-download"></i> Export Livres
+        </a>
+        <a asp-action="ExportCsv" asp-route-type="usagers" class="btn btn-outline-success btn-sm">
+            <i class="fas fa-download"></i> Export Usagers
+        </a>
+        <a asp-action="ExportCsv" asp-route-type="prets" class="btn btn-outline-warning btn-sm">
+            <i class="fas fa-download"></i> Export Prêts
+        </a>
+    </div>
+</div>
+
+<!-- Statistiques principales -->
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card bg-primary text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-book fa-2x mb-2"></i>
+                <h3 class="mb-0">@Model.TotalLivres</h3>
+                <p class="mb-0">Livres</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-success text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-2x mb-2"></i>
+                <h3 class="mb-0">@Model.TotalUsagers</h3>
+                <p class="mb-0">Usagers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-info text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-hand-holding fa-2x mb-2"></i>
+                <h3 class="mb-0">@Model.PretsActifs</h3>
+                <p class="mb-0">Prêts actifs</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-warning text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h3 class="mb-0">@Model.PretsEnRetard</h3>
+                <p class="mb-0">En retard</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-secondary text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <h3 class="mb-0">@Model.LivresDisponibles</h3>
+                <p class="mb-0">Disponibles</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-dark text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-percentage fa-2x mb-2"></i>
+                <h3 class="mb-0">@(Model.TotalLivres > 0 ? Math.Round((double)Model.LivresDisponibles / Model.TotalLivres * 100, 1) : 0)%</h3>
+                <p class="mb-0">Disponibilité</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alertes -->
+@if (Model.PretsEnRetard > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Attention!</strong> Il y a @Model.PretsEnRetard prêt(s) en retard.
+        <a asp-action="PretsEnRetard" class="alert-link">Voir les détails</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (Model.LivresDisponibles == 0)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <strong>Aucun livre disponible!</strong> Tous les livres sont actuellement empruntés.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Actions rapides -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Livres</h5>
+                <p class="card-text">Gérez la collection de livres</p>
+                <a asp-controller="Livres" asp-action="Index" class="btn btn-primary">
+                    <i class="fas fa-list"></i> Voir les livres
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Usagers</h5>
+                <p class="card-text">Gérez les membres</p>
+                <a asp-controller="Usagers" asp-action="Index" class="btn btn-success">
+                    <i class="fas fa-list"></i> Voir les usagers
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-hand-holding fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">Prêts</h5>
+                <p class="card-text">Suivez les emprunts</p>
+                <a asp-controller="Prets" asp-action="Index" class="btn btn-warning">
+                    <i class="fas fa-list"></i> Voir les prêts
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-bar fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Rapports</h5>
+                <p class="card-text">Consultez les statistiques</p>
+                <a asp-action="RapportActivite" class="btn btn-info">
+                    <i class="fas fa-chart-line"></i> Voir les rapports
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Liens rapides vers les rapports -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Rapports rapides</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a asp-action="PretsEnRetard" class="btn btn-outline-warning w-100 mb-2">
+                            <i class="fas fa-exclamation-triangle"></i> Prêts en retard
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-action="PretsActifs" class="btn btn-outline-info w-100 mb-2">
+                            <i class="fas fa-hand-holding"></i> Prêts actifs
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-action="LivresPopulaires" class="btn btn-outline-primary w-100 mb-2">
+                            <i class="fas fa-star"></i> Livres populaires
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-action="UsagersActifs" class="btn btn-outline-success w-100 mb-2">
+                            <i class="fas fa-user-check"></i> Usagers actifs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

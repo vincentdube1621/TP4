@@ -1,0 +1,99 @@
+@model Bibliotheques.ApplicationCore.Entities.Emprunt
+@{
+    ViewData["Title"] = "Détails de l'Emprunt";
+}
+
+<h2><i class="fas fa-hand-holding"></i> Détails de l'Emprunt</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>Emprunt #@Model.Id</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Livre:</dt>
+                    <dd class="col-sm-9">
+                        <strong>@Model.Livre?.Titre</strong><br>
+                        <small class="text-muted">@Model.Livre?.Auteur</small>
+                    </dd>
+                    
+                    <dt class="col-sm-3">Usager:</dt>
+                    <dd class="col-sm-9">@Model.Usager?.NomComplet</dd>
+                    
+                    <dt class="col-sm-3">Date d'emprunt:</dt>
+                    <dd class="col-sm-9">@Model.DateEmprunt.ToString("dd/MM/yyyy")</dd>
+                    
+                    <dt class="col-sm-3">Date de retour prévue:</dt>
+                    <dd class="col-sm-9">@Model.DateRetourPrevue.ToString("dd/MM/yyyy")</dd>
+                    
+                    <dt class="col-sm-3">Date de retour réelle:</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.DateRetourReelle.HasValue)
+                        {
+                            @Model.DateRetourReelle.Value.ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            <span class="text-muted">-</span>
+                        }
+                    </dd>
+                    
+                    <dt class="col-sm-3">Statut:</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.EstEnRetard)
+                        {
+                            <span class="badge bg-warning">
+                                <i class="fas fa-exclamation-triangle"></i> En retard (@Model.JoursDeRetard jours)
+                            </span>
+                        }
+                        else if (Model.EstActif)
+                        {
+                            <span class="badge bg-success">
+                                <i class="fas fa-clock"></i> Actif
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-check"></i> Retourné
+                                @if (Model.EstDefaillance)
+                                {
+                                    <i class="fas fa-exclamation-circle text-warning"></i>
+                                }
+                            </span>
+                        }
+                    </dd>
+                    
+                    <dt class="col-sm-3">Durée:</dt>
+                    <dd class="col-sm-9">@Model.DureeEmprunt jours</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Actions</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.EstActif)
+                {
+                    <a class="btn btn-success w-100 mb-2" asp-action="Retourner" asp-route-id="@Model.Id" 
+                       onclick="return confirm('Confirmer le retour de ce livre?')">
+                        <i class="fas fa-undo"></i> Retourner le livre
+                    </a>
+                    <a class="btn btn-danger w-100 mb-2" asp-action="Delete" asp-route-id="@Model.Id"
+                       onclick="return confirm('Supprimer cet emprunt?')">
+                        <i class="fas fa-trash"></i> Supprimer l'emprunt
+                    </a>
+                }
+                <a class="btn btn-secondary w-100" asp-action="Index">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BibliothequeLIPAJOLI.Models
+namespace Bibliotheques.ApplicationCore.Entities
 {
     /// <summary>
     /// Représente un livre dans la bibliothèque
@@ -11,7 +10,6 @@ namespace BibliothequeLIPAJOLI.Models
         /// <summary>
         /// Identifiant unique du livre
         /// </summary>
-        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -43,7 +41,6 @@ namespace BibliothequeLIPAJOLI.Models
         [Required(ErrorMessage = "L'ISBN est obligatoire")]
         [Display(Name = "ISBN")]
         [RegularExpression(@"^(97(8|9))?\d{9}(\d|X)$", ErrorMessage = "ISBN invalide (ISBN-10 ou ISBN-13)")]
-        [UniqueIsbn]
         public string Isbn { get; set; } = string.Empty;
 
         /// <summary>
@@ -65,7 +62,7 @@ namespace BibliothequeLIPAJOLI.Models
         /// <summary>
         /// Collection des prêts associés à ce livre
         /// </summary>
-        public ICollection<Pret>? Prets { get; set; }
+        public ICollection<Emprunt>? Emprunts { get; set; }
 
         /// <summary>
         /// Vérifie si le livre est disponible pour emprunt

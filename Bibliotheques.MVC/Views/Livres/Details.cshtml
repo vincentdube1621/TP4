@@ -1,0 +1,74 @@
+@model Bibliotheques.ApplicationCore.Entities.Livre
+@{
+    ViewData["Title"] = "Détails du Livre";
+}
+
+<h2><i class="fas fa-book"></i> Détails du Livre</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>@Model.Titre</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Auteur:</dt>
+                    <dd class="col-sm-9">@Model.Auteur</dd>
+                    
+                    <dt class="col-sm-3">Année de publication:</dt>
+                    <dd class="col-sm-9">@Model.AnneePublication</dd>
+                    
+                    <dt class="col-sm-3">ISBN:</dt>
+                    <dd class="col-sm-9"><code>@Model.Isbn</code></dd>
+                    
+                    <dt class="col-sm-3">Quantité totale:</dt>
+                    <dd class="col-sm-9">@Model.QuantiteTotale</dd>
+                    
+                    <dt class="col-sm-3">Quantité disponible:</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.EstDisponible)
+                        {
+                            <span class="badge bg-success">@Model.QuantiteDisponible</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">0</span>
+                        }
+                    </dd>
+                    
+                    <dt class="col-sm-3">Statut:</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.EstDisponible)
+                        {
+                            <span class="badge bg-success">Disponible</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Non disponible</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Actions</h5>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-warning w-100 mb-2" asp-action="Edit" asp-route-id="@Model.Id">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <a class="btn btn-danger w-100 mb-2" asp-action="Delete" asp-route-id="@Model.Id">
+                    <i class="fas fa-trash"></i> Supprimer
+                </a>
+                <a class="btn btn-secondary w-100" asp-action="Index">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
